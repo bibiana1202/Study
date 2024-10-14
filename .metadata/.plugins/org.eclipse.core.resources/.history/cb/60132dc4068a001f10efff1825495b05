@@ -32,10 +32,5 @@ public class Problem03 {
 		// int형 배열로 변경 후 반환
 		return Arrays.stream(result).mapToInt(Integer::intValue).toArray();
 		
-		
-		
-		
 	}
 }
-
-
