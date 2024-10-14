@@ -1,0 +1,29 @@
+package chpater05;
+// https://school.programmers.co.kr/learn/courses/30/lessons/68644
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Problem03 {
+	public static void main(String[] args) {
+        System.out.println(Arrays.toString(solution(new int[]{2,1,3,4,1})));
+        System.out.println(Arrays.toString(solution(new int[]{5,0,2,7})));
+	}
+	
+	private static int[] solution(int[] arr) {
+		for (int i = 0; i < arr.length-1; i++) {
+			for (int j = i+1; j < arr.length-i; j++) {
+				System.out.println(arr[i]);
+				System.out.println(arr[j]);
+				System.out.println(arr[i]+arr[j]);
+			}
+		}
+		
+		// 1. 중복값 제거
+		Integer[] result = Arrays.stream(arr).boxed().distinct().toArray(Integer[]::new);
+		// 2. 내림차순 정렬
+		Arrays.sort(result,Collections.reverseOrder());
+		// int형 배열로 변경 후 반환
+		return Arrays.stream(result).mapToInt(Integer::intValue).toArray();
+		
+	}
+}
