@@ -164,10 +164,19 @@ class BlogApiControllerTest {
         final String newContent =  "new content";
 
         UpdateArticleRequest request = new UpdateArticleRequest(newTitle,newContent);
-        UpdateArticleRequest
+
         //when : UPDATE API로 수정 요청을 보냅니다. 이때 요청 타입은 JSON 이며, given 절에서 미리 만들어둔 객체를 요청 본문으로 함께 보낸다.
+        ResultActions result = mockMvc.perform(put(url,savedArticle.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
 
         //then : 응답코드가 200ok 인지 확인. 블로그 글로 id로 조회한후에 값이 수정되었는지 확인
+        result.andExpect(status().isOk());
+
+        Article article = blogRepository.findById(savedArticle.getId()).get();
+
+        assertThat(article.getTitle()).isEqualTo(newTitle);
+        assertThat(article.getContent()).isEqualTo(newContent);
     }
 
 }
