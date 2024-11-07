@@ -8,23 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
-@Slf4j
+@Log4j
 public class SampleTests {
 
-    @Autowired
-    private Restaurant restaurant;
 
+	@Setter(onMethod_ = {@Autowired})
+	private Restaurant restaurant;
+	
     @Test
     public void testExist() {
         // restaurant가 null이 아닌지 확인
         assertNotNull(restaurant);
 
         // restaurant 객체 정보 로그 출력
-//        Log.info("Restaurant: {}", restaurant);
-//        Log.info("Chef: {}", restaurant.getChef());
+        log.info(restaurant);
+        log.info(restaurant.getChef());
     }
 }

@@ -5,6 +5,25 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    
+	<!-- 히카리 DataSource -->    
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+    	<property name ="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+    	<property name ="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521/xepdb1"></property>
+    	<property name ="username" value ="ace"></property>
+    	<property name ="password" value ="ace"></property>
+    </bean>
+    
+    <!-- 히카리CP configuration -->
+    <bean id="dataSource" class ="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+      <constructor-arg ref="hikariConfig" />
+    </bean> 
+    
+    <!--쿼리 던짐 결과 받아서  -->
+    <bean id="sqlSessionFactory" class ="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource" ref="dataSource"></property>
+    </bean>
+    
     <!-- Root Context: defines shared resources visible to all other web components -->
     <context:component-scan base-package="org.hyejung.sample" />
 </beans>
