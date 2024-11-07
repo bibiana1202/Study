@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     
 	<!-- 히카리 DataSource -->    
@@ -23,6 +25,10 @@
     <bean id="sqlSessionFactory" class ="org.mybatis.spring.SqlSessionFactoryBean">
     	<property name="dataSource" ref="dataSource"></property>
     </bean>
+    
+    <!-- Mapper를 작성해주었다면 MyBatis를 동작할때 Mapper를 인식할수 있도록 설정 -->
+    <mybatis-spring:scan base-package="org.hyejung.mapper"/>
+    <!-- base-package 속성은 지정된 패키지의 모든 MyBatis 관련 어노테이션을 찾아서 처리 -->
     
     <!-- Root Context: defines shared resources visible to all other web components -->
     <context:component-scan base-package="org.hyejung.sample" />
