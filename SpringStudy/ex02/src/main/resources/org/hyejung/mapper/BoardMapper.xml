@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hyejung.mapper.BoardMapper">
+	<select id="getList" resultType="org.hyejung.domain.BoardVO">
+		<![CDATA[
+		SELECT * FROM tbl_board WHERE bno > 0
+		]]>
+	</select>
+</mapper>
