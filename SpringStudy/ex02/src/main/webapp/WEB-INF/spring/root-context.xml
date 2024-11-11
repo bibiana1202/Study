@@ -2,8 +2,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
-		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!--커넥션  -->
@@ -21,6 +23,9 @@
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
    		<property name="dataSource" ref="dataSource"/>
    </bean>
+   <!-- 비즈니스 계층의 인터페이스와 구현클래스가 작성되어 이를 스프링의 빈로 인식하기 위해서 -->
+   <context:component-scan base-package="org.hyejung.service"/>
    
-	<mybatis-spring:scan base-package ="org.hyejung.mapper"/>
+   <!-- mapper -->
+   <mybatis-spring:scan base-package ="org.hyejung.mapper"/>
 </beans>
