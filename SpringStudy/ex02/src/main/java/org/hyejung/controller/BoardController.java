@@ -57,7 +57,7 @@ public class BoardController {
 	}
 	
 	// 3. 조회 처리와 테스트
-	@GetMapping("/get")
+	@GetMapping({"/get","/modify"})
 	public void get (@RequestParam("bno") Long bno, Model model) {
 		try {
 			log.info("/get");

@@ -19,6 +19,9 @@
 			<div class="panel-heading">Board Register</div>
 			<!-- /.panel-heading -->
 			<div class="panel-body">
+				<!-- form 태그를 이용해서 필요한 데이터를 전송!! -->
+				<!-- form-group : 폼 요소를 그룹화 하여 정돈된 레이아웃 유지 -->
+				<!-- form-control : 개별 폼 요소에 일관된 스타일을 적용 -->
 				<form role="form" action="/board/register" method="post">
 					<div class="form-group">
 						<label>Title</label> 
