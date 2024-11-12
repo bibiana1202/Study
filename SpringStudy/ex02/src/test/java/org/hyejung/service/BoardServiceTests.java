@@ -30,7 +30,7 @@ public class BoardServiceTests {
 	
 	// 1. 등록 작업의 구현과 테스트
 	@Test
-	public void testRegister() {
+	public void testRegister() throws Exception {
 		BoardVO board = new BoardVO();
 		board.setTitle("새로 작성하는 글");
 		board.setContent("새로 작성하는 내용");
@@ -43,25 +43,25 @@ public class BoardServiceTests {
 	
 	// 2. 목록(리스트) 작업의 구현과 테스트
 	@Test
-	public void testGetList() {
+	public void testGetList() throws Exception {
 		service.getList().forEach(board -> log.info(board));
 	}
 	
 	// 3. 조회 작업의 구현 과 테스트
 	@Test
-	public void testGet() {
+	public void testGet() throws Exception {
 		log.info(service.get(1L));
 	}
 	
 	// 4. 삭제/수정 구현과 테스트
 	@Test
-	public void testDelete() {
+	public void testDelete() throws Exception {
 		// 게시물 번호의 존재 여부를 확인하고 테스트할 것
 		log.info("REMOVE RESULT: "+service.remove(2L));
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testUpdate() throws Exception{
 		BoardVO board = service.get(1L);
 		
 		if(board==null) {

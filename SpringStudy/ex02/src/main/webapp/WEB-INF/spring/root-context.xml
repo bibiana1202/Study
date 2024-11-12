@@ -23,6 +23,7 @@
    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
    		<property name="dataSource" ref="dataSource"/>
    </bean>
+   
    <!-- 비즈니스 계층의 인터페이스와 구현클래스가 작성되어 이를 스프링의 빈로 인식하기 위해서 -->
    <context:component-scan base-package="org.hyejung.service"/>
    

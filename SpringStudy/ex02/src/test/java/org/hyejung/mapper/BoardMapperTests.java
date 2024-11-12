@@ -1,5 +1,8 @@
 package org.hyejung.mapper;
 
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
 import org.hyejung.domain.BoardVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +24,8 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testGetList() {
-		mapper.getList().forEach(board -> log.info(board));
+//		mapper.getList().forEach(board -> log.info(board));
+		assertNotEquals(null,mapper.getList());
 	}
 	
 	// 1. create(insert) 처리
@@ -60,7 +64,8 @@ public class BoardMapperTests {
 	// 3. delete 처리
 	@Test
 	public void testDelete() {
-		log.info("DELETE COUNT:" + mapper.delete(3L));
+//		log.info("DELETE COUNT:" + mapper.delete(3L));
+		assertTrue(1== mapper.delete(3L));
 	}
 	
 	// 4. update 처리
@@ -74,8 +79,9 @@ public class BoardMapperTests {
 		board.setContent("수정된 내용");
 		board.setWriter("user00");
 		
-		int count = mapper.update(board);
-		log.info("UPDATE COUNT:" + count);
+//		int count = mapper.update(board);
+//		log.info("UPDATE COUNT:" + count);
+		assertTrue(1==mapper.update(board));
 	}
 	
 }

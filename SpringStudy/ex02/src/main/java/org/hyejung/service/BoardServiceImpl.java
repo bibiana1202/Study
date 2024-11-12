@@ -20,36 +20,68 @@ public class BoardServiceImpl implements BoardService {
 	
 	// 1. 등록 작업의 구현과 테스트
 	@Override
-	public void register(BoardVO board) {
-		log.info("register...." + board); 
-		mapper.insertSelectKey(board);
+	public void register(BoardVO board) throws Exception {
+		try {
+			log.info("register...." + board); 
+			mapper.insertSelectKey(board);
+		} catch (Exception e) {
+			log.error(null);
+		}
 	}
 
 	// 2. 목록(리스트) 작업의 구현과 테스트
 	@Override
-	public List<BoardVO> getList() {
-		log.info("getList......");
-		return mapper.getList();
+	public List<BoardVO> getList() throws Exception {
+		try {
+			log.info("getList......");
+			return mapper.getList();
+		} catch (Exception e) {
+			log.error(e.getMessage()); // 예외 메시지를 로그에 기록
+			throw e; // 예외를 다시 던져 상위 호출자에게 전파
+		}
 	}
 
 	// 3. 조회 작업의 구현과 테스트
 	@Override
-	public BoardVO get(Long bno) {
-		log.info("get....."+bno);
-		return mapper.read(bno);
+	public BoardVO get(Long bno) throws Exception {
+		try {
+			log.info("get......"+bno);
+			BoardVO board = mapper.read(bno);
+			if(board == null) throw new RuntimeException(bno + "게시물이 없음");
+			return board;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}		
 	}
 
 	// 4. 삭제/수정 구현과 테스트
 	@Override
-	public boolean modify(BoardVO board) {
-		log.info("modify....."+board);
-		return mapper.update(board)== 1;
+	public boolean modify(BoardVO board) throws Exception {
+		try {
+			log.info("modify...."+board);
+			
+			if( mapper.update(board) == 0) 
+				throw new RuntimeException(board.getBno()+"번 게시물이 수정되지 않음");
+			return true;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
 	}
 
 	@Override
-	public boolean remove(Long bno) {
-		log.info("remove....."+bno);
-		return mapper.delete(bno)==1;
+	public boolean remove(Long bno) throws Exception {
+		try {
+			log.info("remove...."+bno);
+			
+			if( mapper.delete(bno) == 0) 
+				throw new RuntimeException(bno+"번 게시물이 삭제되지 않음");
+			return true;
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
 	}
 
 
