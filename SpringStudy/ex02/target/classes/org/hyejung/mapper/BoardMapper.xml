@@ -41,4 +41,18 @@
 			   updateDate = sysdate
 	    where  bno        = #{bno}
 	</update>
+	
+	<!-- 페이징 처리 -->
+	<select id ="getListWithPaging" resultType="org.hyejung.domain.BoardVO">
+		<![CDATA[
+		select bno,title,content,writer,regdate,updatedate
+		from(
+			select /*+INDEX_DESC(tbl_board pk_board)*/
+				rownum rn,bno,title,content,writer,regdate,updatedate
+			from tbl_board
+			where rownum <= #{pageNum} * #{amount}
+			)
+		where rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>
 </mapper>

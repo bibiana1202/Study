@@ -42,6 +42,7 @@
 					<button data-oper='modify' class="btn btn-default">Modify</button>
 					<button data-oper='list' class="btn btn-info">List</button> 
 					
+					<!-- 다양한 상황을 처리하기 위해서 form 태그 이용~~ -->
 					<form id ='operForm' action="/board/modify" method="get">
 						<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
 					</form>

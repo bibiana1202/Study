@@ -3,6 +3,7 @@ package org.hyejung.service;
 import java.util.List;
 
 import org.hyejung.domain.BoardVO;
+import org.hyejung.domain.Criteria;
 
 public interface BoardService {
 
@@ -14,5 +15,6 @@ public interface BoardService {
 	
 	public boolean remove (Long bno) throws Exception;
 	
-	public List<BoardVO> getList() throws Exception;
+//	public List<BoardVO> getList() throws Exception;
+	public List<BoardVO> getList(Criteria cri) throws Exception;
 }

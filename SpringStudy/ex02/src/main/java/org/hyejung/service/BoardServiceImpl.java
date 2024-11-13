@@ -3,6 +3,7 @@ package org.hyejung.service;
 import java.util.List;
 
 import org.hyejung.domain.BoardVO;
+import org.hyejung.domain.Criteria;
 import org.hyejung.mapper.BoardMapper;
 import org.springframework.stereotype.Service;
 
@@ -30,11 +31,23 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	// 2. 목록(리스트) 작업의 구현과 테스트
+//	@Override
+//	public List<BoardVO> getList() throws Exception {
+//		try {
+//			log.info("getList......");
+//			return mapper.getList();
+//		} catch (Exception e) {
+//			log.error(e.getMessage()); // 예외 메시지를 로그에 기록
+//			throw e; // 예외를 다시 던져 상위 호출자에게 전파
+//		}
+//	}
+	
+	// 페이징 처리
 	@Override
-	public List<BoardVO> getList() throws Exception {
+	public List<BoardVO> getList(Criteria cri) throws Exception {
 		try {
-			log.info("getList......");
-			return mapper.getList();
+			log.info("get List with Criteria......"+cri);
+			return mapper.getListWithPaging(cri);
 		} catch (Exception e) {
 			log.error(e.getMessage()); // 예외 메시지를 로그에 기록
 			throw e; // 예외를 다시 던져 상위 호출자에게 전파

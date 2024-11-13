@@ -1,6 +1,7 @@
 package org.hyejung.controller;
 
 import org.hyejung.domain.BoardVO;
+import org.hyejung.domain.Criteria;
 import org.hyejung.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +22,25 @@ public class BoardController {
 	private BoardService service;
 	
 	//1. 목록에 대한 처리와 테스트
+//	@GetMapping("/list")
+//	public void list(Model model) {
+//		try {
+//			log.info("list.......");
+//			model.addAttribute("list",service.getList());
+//		} catch (Exception e) {
+//			// 유저에게 보여줄 메시지 리턴
+//			// 이동 할 곳도 지정할수도
+//			e.printStackTrace();
+//			
+//		}
+//	}
+	
+	// 페이징 처리!!
 	@GetMapping("/list")
-	public void list(Model model) {
+	public void list(Criteria cri ,Model model) {
 		try {
-			log.info("list.......");
-			model.addAttribute("list",service.getList());
+			log.info("list......."+cri);
+			model.addAttribute("list",service.getList(cri));
 		} catch (Exception e) {
 			// 유저에게 보여줄 메시지 리턴
 			// 이동 할 곳도 지정할수도

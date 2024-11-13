@@ -3,7 +3,10 @@ package org.hyejung.mapper;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.hyejung.domain.BoardVO;
+import org.hyejung.domain.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +85,16 @@ public class BoardMapperTests {
 //		int count = mapper.update(board);
 //		log.info("UPDATE COUNT:" + count);
 		assertTrue(1==mapper.update(board));
+	}
+	
+	// 페이징 테스트와 수정
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		cri.setPageNum(3);
+		cri.setAmount(10);
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board -> log.info(board));
 	}
 	
 }

@@ -3,6 +3,7 @@ package org.hyejung.service;
 import static org.junit.Assert.assertNotNull;
 
 import org.hyejung.domain.BoardVO;
+import org.hyejung.domain.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,10 @@ public class BoardServiceTests {
 	// 2. 목록(리스트) 작업의 구현과 테스트
 	@Test
 	public void testGetList() throws Exception {
-		service.getList().forEach(board -> log.info(board));
+
+		//service.getList().forEach(board -> log.info(board));
+		// 페이징 처리
+		service.getList(new Criteria(2,10)).forEach(board->log.info(board));
 	}
 	
 	// 3. 조회 작업의 구현 과 테스트

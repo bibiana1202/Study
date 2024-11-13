@@ -42,6 +42,16 @@ public class BoardControllerTests {
 				 .getModelMap());
 	}
 	
+	// 페이징 처리
+	@Test
+	public void testListPaging() throws Exception{
+		log.info(mockMvc.perform(
+				MockMvcRequestBuilders.get("/board/list")
+				.param("pageNum", "2")
+				.param("amount", "50"))
+				.andReturn().getModelAndView().getModelMap());
+	}
+	
 	// 2.등록 처리와 테스트
 	@Test
 	public void testRegister() throws Exception{
