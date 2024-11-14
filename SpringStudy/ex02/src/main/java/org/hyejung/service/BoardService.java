@@ -17,4 +17,7 @@ public interface BoardService {
 	
 //	public List<BoardVO> getList() throws Exception;
 	public List<BoardVO> getList(Criteria cri) throws Exception;
+	
+	// 전체 페이지 개수
+	public int getTotal(Criteria cri);
 }

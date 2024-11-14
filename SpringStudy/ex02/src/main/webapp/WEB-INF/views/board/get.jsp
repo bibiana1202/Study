@@ -45,6 +45,8 @@
 					<!-- 다양한 상황을 처리하기 위해서 form 태그 이용~~ -->
 					<form id ='operForm' action="/board/modify" method="get">
 						<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
+						<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+						<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 					</form>
 			</div>
 			<!-- end panel-body -->

@@ -22,12 +22,14 @@ public class BoardServiceImpl implements BoardService {
 	// 1. 등록 작업의 구현과 테스트
 	@Override
 	public void register(BoardVO board) throws Exception {
-		try {
-			log.info("register...." + board); 
-			mapper.insertSelectKey(board);
-		} catch (Exception e) {
-			log.error(null);
-		}
+//		try {
+//			log.info("register...." + board); 
+//			mapper.insertSelectKey(board);
+//		} catch (Exception e) {
+//			log.error(null);
+//		}
+		log.info("register....."+board);
+		mapper.insertSelectKey(board);
 	}
 
 	// 2. 목록(리스트) 작업의 구현과 테스트
@@ -57,44 +59,65 @@ public class BoardServiceImpl implements BoardService {
 	// 3. 조회 작업의 구현과 테스트
 	@Override
 	public BoardVO get(Long bno) throws Exception {
-		try {
-			log.info("get......"+bno);
-			BoardVO board = mapper.read(bno);
-			if(board == null) throw new RuntimeException(bno + "게시물이 없음");
-			return board;
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			throw e;
-		}		
+//		try {
+//			log.info("get......"+bno);
+//			BoardVO board = mapper.read(bno);
+//			if(board == null) throw new RuntimeException(bno + "게시물이 없음");
+//			return board;
+//		} catch (Exception e) {
+//			log.error(e.getMessage());
+//			throw e;
+//		}	
+		log.info("get......"+bno);
+		BoardVO board = mapper.read(bno);
+		if(board == null) throw new RuntimeException(bno + "게시물이 없음");
+		return board;
 	}
 
 	// 4. 삭제/수정 구현과 테스트
 	@Override
 	public boolean modify(BoardVO board) throws Exception {
-		try {
-			log.info("modify...."+board);
-			
-			if( mapper.update(board) == 0) 
-				throw new RuntimeException(board.getBno()+"번 게시물이 수정되지 않음");
-			return true;
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			throw e;
-		}
+//		try {
+//			log.info("modify...."+board);
+//			
+//			if( mapper.update(board) == 0) 
+//				throw new RuntimeException(board.getBno()+"번 게시물이 수정되지 않음");
+//			return true;
+//		} catch (Exception e) {
+//			log.error(e.getMessage());
+//			throw e;
+//		}
+		log.info("modify...."+board);
+		
+		if( mapper.update(board) == 0) 
+			throw new RuntimeException(board.getBno()+"번 게시물이 수정되지 않음");
+		return true;
 	}
 
 	@Override
 	public boolean remove(Long bno) throws Exception {
-		try {
-			log.info("remove...."+bno);
-			
-			if( mapper.delete(bno) == 0) 
-				throw new RuntimeException(bno+"번 게시물이 삭제되지 않음");
-			return true;
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			throw e;
-		}
+//		try {
+//			log.info("remove...."+bno);
+//			
+//			if( mapper.delete(bno) == 0) 
+//				throw new RuntimeException(bno+"번 게시물이 삭제되지 않음");
+//			return true;
+//		} catch (Exception e) {
+//			log.error(e.getMessage());
+//			throw e;
+//		}
+		log.info("remove...."+bno);
+		
+		if( mapper.delete(bno) == 0) 
+			throw new RuntimeException(bno+"번 게시물이 삭제되지 않음");
+		return true;
+	}
+
+	// 전체 데이터 개수
+	@Override
+	public int getTotal(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
 	}
 
 

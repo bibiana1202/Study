@@ -55,4 +55,9 @@
 		where rn > (#{pageNum} -1) * #{amount}
 		]]>
 	</select>
+	
+	<!-- 전체 페이지 개수 -->
+	<select id ="getTotalCount" resultType="int">
+		select count(*) from tbl_board where bno >0
+	</select>
 </mapper>

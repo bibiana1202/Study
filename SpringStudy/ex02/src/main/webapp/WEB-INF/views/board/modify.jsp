@@ -21,6 +21,9 @@
 			
 			<div class="panel-body">
 				<form role="form" action="/board/modify" method ="post">
+						<!-- 추가 -->
+						<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+						<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 						<div class="form-group">
 							<label>Bno</label> 
 							<input class="form-control" name='bno' value='<c:out value="${board.bno}"/>' readonly="readonly">
@@ -77,12 +80,16 @@
 			formObj.attr("action","/board/remove")
 		}else if(operation === 'list'){
 			// move to list
-			//self.location ="/board/list";
-			//return;
-			//아무런 파라미터가 없기 때문에 <form> 태그의 모든 내용은 삭제한 상태에서 submit() 진행
 			formObj.attr("action","/board/list").attr("method","get");
+			// 수정/삭제 페이지에서 목록 페이지로 이동
+			// form 태그에서 필요한 부분만 잠시 복사(clone)해서 보관
+			var pageNumTag = $("input[name='pageNum']").clone();
+			var amountTag = $("input[name='amount']").clone();
+			// form 태그내의 모든 내용은 지워버리고			
 			formObj.empty();
-			
+			// 다시 필요한 태그만 추가해서 /board/list를 호출하는 형태
+			formObj.append(pageNumTag);
+			formObj.append(amountTag);
 		}
 		formObj.submit(); // 마지막에 직접 submit() 수행
 	});

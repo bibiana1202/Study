@@ -2,10 +2,12 @@ package org.hyejung.controller;
 
 import org.hyejung.domain.BoardVO;
 import org.hyejung.domain.Criteria;
+import org.hyejung.domain.PageDTO;
 import org.hyejung.service.BoardService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +43,14 @@ public class BoardController {
 		try {
 			log.info("list......."+cri);
 			model.addAttribute("list",service.getList(cri));
+			// BoardController 에서는 PageDTO 를 사용할 수 있또록 Model에 담아서 화면에 전달해줄 필요가 있씁니당~
+			// 페이징 처리를 위한 클래스 설계
+//			model.addAttribute("pageMaker",new PageDTO(cri,123)); // 전체페이지 123
+			
+			// 전체 페이지 개수
+			int total = service.getTotal(cri);
+			log.info("total: "+total);
+			model.addAttribute("pageMaker",new PageDTO(cri,total));
 		} catch (Exception e) {
 			// 유저에게 보여줄 메시지 리턴
 			// 이동 할 곳도 지정할수도
@@ -73,7 +83,7 @@ public class BoardController {
 	
 	// 3. 조회 처리와 테스트
 	@GetMapping({"/get","/modify"})
-	public void get (@RequestParam("bno") Long bno, Model model) {
+	public void get (@RequestParam("bno") Long bno,@ModelAttribute("cri") Criteria cri, Model model) {
 		try {
 			log.info("/get");
 			model.addAttribute("board",service.get(bno));
@@ -84,13 +94,16 @@ public class BoardController {
 	
 	// 4. 수정 처리와 테스트
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		try {
 			log.info("modify:" + board);
 			
 			if(service.modify(board)) {
 				rttr.addFlashAttribute("result","success");
 			}
+			// 수정 처리후 이동
+			rttr.addAttribute("pageNum",cri.getPageNum());
+			rttr.addAttribute("amount",cri.getAmount());
 			return "redirect:/board/list";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,12 +113,17 @@ public class BoardController {
 	
 	// 5. 삭제 처리와 테스트
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		try {
 			log.info("remove...."+bno);
 			if(service.remove(bno)) {
 				rttr.addFlashAttribute("result","success");
 			}
+			
+			// 삭제 처리후 이동
+			rttr.addAttribute("pageNum",cri.getPageNum());
+			rttr.addAttribute("amount",cri.getAmount());
+			
 			return "redirect:/board/list";
 		} catch (Exception e) {
 			e.printStackTrace();
