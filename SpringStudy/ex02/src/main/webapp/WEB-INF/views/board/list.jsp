@@ -45,6 +45,29 @@
 						</tr>
 						</c:forEach>	                  
                   </table>
+
+				 <!-- 목록 화면에서의 검색 처리 -->
+                 <div class ='row'>
+                 	<div class="col-lg-12">
+	                 <form id ='searchForm' action ="/board/list" method ='get'>
+	                 	<!-- select 태그의 내부는 삼항 연산자를 이용해서 해당 조건으로 검색 되었으면 selected라는 문자열을 출력하게해서 화면에서 선택된 항목으로 보이도록 한다. -->
+	                 	<select name='type'>
+	                 		<option value ="" <c:out value="${pageMaker.cri.type==null?'selected':''}" />>--</option>
+	                 		<option value ="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}" />>제목</option>
+	                 		<option value ="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}" />>내용</option>
+	                 		<option value ="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}" />>작성자</option>
+	                 		<option value ="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}" />>제목 or 내용</option>
+	                 		<option value ="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}" />>제목 or 작성자</option>
+	                 		<option value ="TWC" <c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}" />>제목 or 내용 or 작성자</option>
+	                 	</select>
+	                 	<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword}"/>' > 
+	                 	<input type='hidden' name='pageNum' value ='<c:out value="${pageMaker.cri.pageNum}"/>'>
+	                 	<input type='hidden' name='amount' value ='<c:out value="${pageMaker.cri.amount}"/>'>
+	                 	<button class ='btn btn-default'>Search</button>
+	                 </form>                 	
+                 	</div>
+                 </div>
+                 
                   
                  <!-- 실제 페이지 동작 form 태그 : 페이지 번호 전송용 form 추가 -->
                  <!-- 
@@ -53,7 +76,9 @@
                   -->
   				 <form id="actionForm" action="/board/list" method="get">
 				    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-				    <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+				    <input type="hidden" name="amount"  value="${pageMaker.cri.amount}">
+				    <input type='hidden' name='type'    value='<c:out value="${pageMaker.cri.type}" />'>
+				    <input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword}" />'>
 				 </form>
 
                   <!-- 페이지 번호 출력 -->
@@ -149,6 +174,28 @@
 		 // form 태그의 action을 '/board/get'으로 변경
  		actionForm.attr("action","/board/get");// <-- 여기서 action이 변경됨(동적)
 		actionForm.submit();
+  	});
+  	
+  	// 검색 버튼의 이벤트 처리
+  	let searchForm = $("#searchForm");
+  	
+  	$("#searchForm button").on("click",function(e){
+  		// 검색 종류를 입력하지 않았을때
+  		if(!searchForm.find("option:selected").val()){
+  			alert("검색 종류를 선택하세요");
+  			return false;
+  		}
+  		// 키워드를 입력하지 않았을때
+  		if(!searchForm.find("input[name='keyword']").val()){
+  			alert("키워드를 입력하세요");
+  			return false;
+  		}
+  		
+  		//form 태그의 전송은 막고 페이지의 번호는 1이 되도록 처리
+  		searchForm.find("input[name='pageNum']").val("1");
+  		e.preventDefault();
+  		
+  		searchForm.submit();
   	});
   	
   });

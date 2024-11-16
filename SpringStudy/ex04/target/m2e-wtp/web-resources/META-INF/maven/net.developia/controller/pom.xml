@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.developia</groupId>
 	<artifactId>controller</artifactId>
-	<name>xcispring01</name>
+	<name>ex04</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>

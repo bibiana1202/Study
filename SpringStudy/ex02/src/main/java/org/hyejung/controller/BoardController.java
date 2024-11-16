@@ -102,9 +102,13 @@ public class BoardController {
 				rttr.addFlashAttribute("result","success");
 			}
 			// 수정 처리후 이동
-			rttr.addAttribute("pageNum",cri.getPageNum());
-			rttr.addAttribute("amount",cri.getAmount());
-			return "redirect:/board/list";
+//			rttr.addAttribute("pageNum",cri.getPageNum());
+//			rttr.addAttribute("amount",cri.getAmount());
+//			rttr.addAttribute("type",cri.getType());
+//			rttr.addAttribute("keyword",cri.getKeyword());
+//			
+			// UriComponentsBuilder 사용 
+			return "redirect:/board/list" + cri.getListLink();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -121,10 +125,13 @@ public class BoardController {
 			}
 			
 			// 삭제 처리후 이동
-			rttr.addAttribute("pageNum",cri.getPageNum());
-			rttr.addAttribute("amount",cri.getAmount());
-			
-			return "redirect:/board/list";
+//			rttr.addAttribute("pageNum",cri.getPageNum());
+//			rttr.addAttribute("amount",cri.getAmount());
+//			rttr.addAttribute("type",cri.getType());
+//			rttr.addAttribute("keyword",cri.getKeyword());
+//			
+			// UriComponentsBuilder 사용 
+			return "redirect:/board/list" + cri.getListLink();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
