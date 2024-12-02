@@ -23,6 +23,7 @@ public class ReplyMapperTests {
 	@Autowired
 	private ReplyMapper mapper;
 	
+	// ReplyMapper 가 사용가능한지에 대한 테스트 작업
 	@Test
 	public void testMapper() {
 		log.info(mapper);
@@ -57,14 +58,14 @@ public class ReplyMapperTests {
 	//삭제
 	@Test
 	public void testDelete() {
-		Long targetRno = 1L;
+		Long targetRno = 2L;
 		mapper.delete(targetRno);
 	}  
 	
 	// 수정
 	@Test
 	public void testUpdate() {
-		Long targetRno = 10L;
+		Long targetRno = 21L;
 		ReplyVO vo = mapper.read(targetRno);
 		vo.setReply("Update Reply");
 		int count = mapper.update(vo);

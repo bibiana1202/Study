@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.hyejung.mapper.DiaryMapper">
+
+	<select id="getList" resultType="org.hyejung.domain.DiaryVO">
+		<![CDATA[
+		select * 
+		from diary
+		where userid = #{userid}
+		and TO_CHAR(regdate , 'YYYY-MM') = TO_CHAR(#{regdate},'YYYY-MM')
+		and use_yn ='Y'
+		]]>
+	</select>
+	
+	<!-- 1. create(insert) 처리 -->
+	<insert id="insert" parameterType="org.hyejung.domain.DiaryVO">
+		<![CDATA[
+		INSERT INTO diary (USERID, DNO, TITLE, CONTENT, WRITER, REGDATE,UPDATEDATE, EMOTIONSTATUS, USE_YN)
+		VALUES (#{userid}, #{dno}, #{title}, #{content}, #{writer} ,SYSDATE ,SYSDATE,#{emotionStatus}, 'Y')
+		]]>
+	</insert>
+
+	 <insert id = "insertSelectKey"> 
+		<selectKey keyProperty="dno" order="BEFORE" resultType="long">
+			select nvl(max(dno),0) +1 maxDno
+			from diary
+			where userid = #{userid}
+		</selectKey>
+		
+		<![CDATA[
+		INSERT INTO diary (USERID, DNO, TITLE, CONTENT, WRITER, REGDATE,UPDATEDATE, EMOTIONSTATUS, USE_YN)
+		VALUES (#{userid}, #{dno}, #{title}, #{content}, #{writer},SYSDATE,SYSDATE,#{emotionStatus}, 'Y')
+		]]>
+	</insert>
+	
+	<!-- 2. read(select) 처리 -->
+	<select id="read" resultType="org.hyejung.domain.DiaryVO">
+		select * from diary where dno = #{dno} and userid= #{userid} and use_yn ='Y'
+	</select>
+	
+		<!-- 3. delete 처리 -->
+	<delete id="delete">
+		update diary set use_yn ='N'  where dno = #{dno} and userid= #{userid}
+	</delete>
+	
+		<!-- 4. update 처리 -->
+	<update id="update">
+		update diary
+		set	   title      = #{title},
+			   content    = #{content},
+			   writer     = #{writer},
+			   updateDate = sysdate
+	    where  dno = #{dno} and userid= #{userid} and use_yn='Y'
+	</update>
+	
+</mapper>

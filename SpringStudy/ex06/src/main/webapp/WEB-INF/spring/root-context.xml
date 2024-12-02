@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-5.0.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+   
+   <!-- Root Context: defines shared resources visible to all other web components -->
+   <!--커넥션풀  -->
+   <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+      <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+      <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521/xepdb1" />
+      <property name="username" value="jung" />
+      <property name="password" value="jung" />
+   </bean>
+   
+	<!--연결 connection 역할 , 세세한설정 트랜잭션 매니저 필요  -->
+   <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+      <constructor-arg ref="hikariConfig" />
+   </bean>
+      
+   <!--쿼리 던짐 sqlSession 주입되어있는걸로 알아서 처리  -->
+   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+   		<property name="dataSource" ref="dataSource"/>
+   		<property name="typeAliasesPackage" value="org.hyejung.domain" /> <!-- 패키지명 생략 가능 -->
+   </bean>
+   
+   <!-- mybatis 스캔 -->
+	<mybatis-spring:scan base-package ="org.hyejung.mapper"/>
+	
+	<!--  -->
+	<context:annotation-config/>
+	
+	<!-- 서비스 비즈니스 스캔 -->
+	<context:component-scan base-package="org.hyejung.service"/>
+	
+	<!-- aop 스캔 -->
+	<context:component-scan base-package="org.hyejung.aop"></context:component-scan>
+	
+	<!-- Spring XML 설정에서 AspectJ 의 어노테이션 기반 AOP기능을 활성화 -->
+	<!-- 프록시(proxy) 기반으로 AOP를 설정하도록 지시하는 XML 태그 
+		이 설정을 추가하면 Spring 컨테이너가 @Aspect로 정의된 클래스를 자동으로 찾아
+		AOP 프록시 객체를 생성하고 포인트컷과 어드바이스를 적용할수 있다.
+		= AOP 설정 활성화
+	-->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<!-- 트랜잭션 매니저 반드시 서비스에 걸어야함...(root-context.xml)-->
+	<!-- 
+	"transactionManager"로 설정된 트랜잭션 매니저는 DataSourceTransactionManager 클래스를 사용하여 
+	트랜잭션을 관리합니다. 이 매니저는 데이터베이스와의 트랜잭션을 관리하며 dataSource를 참조합니다.
+	dataSource 프로퍼티에 실제 데이터 소스가 주입되어야 하며, 이 데이터 소스는 애플리케이션의 DB 연결 정보를 담고 있습니다. 
+	이 설정으로 인해 @Transactional 애노테이션을 사용한 서비스 메서드에서 트랜잭션 처리가 이루어지게 됩니다.
+	 -->
+	<!-- 트랜잭션 지원을 위한 AOP 설정 (around advice)-->
+	<tx:annotation-driven/>	 <!-- 이름바꾸면 등록해줘야함 -->
+	<!-- 트랜잭션 매니저 빈 설정 -->
+	<bean id ="transactionManager" class ="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>	
+	</bean>
+	
+	<context:property-placeholder location =""/>
+	   
+</beans>

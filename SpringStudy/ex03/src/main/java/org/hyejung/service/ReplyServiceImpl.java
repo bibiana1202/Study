@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
-@Service
+@Service //스프링 컨테이너는 @Service 어노테이션을 사용해서 ReplyServiceImpl을 빈으로 등록합니다.
 @Log4j
 @AllArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
