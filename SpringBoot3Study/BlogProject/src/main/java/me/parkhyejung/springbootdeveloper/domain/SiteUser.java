@@ -12,11 +12,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name="users")
+@Table(name="SiteUser")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class User implements UserDetails { // UserDetails를 상속받아 인증 객체로 사용
+public class SiteUser implements UserDetails { // UserDetails를 상속받아 인증 객체로 사용
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class User implements UserDetails { // UserDetails를 상속받아 인증
     private String password;
 
     @Builder
-    public User(String email, String password, String auth) {
+    public SiteUser(String email, String password, String auth) {
         this.email = email;
         this.password = password;
     }
