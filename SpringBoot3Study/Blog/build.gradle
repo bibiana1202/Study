@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'me.parkhyejung'
+version = '1.0-SNAPSHOT'
+sourceCompatibility ='17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // devtools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // spring data jdbc, oracle, log4jdbc
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' //jpa
+    implementation 'com.oracle.database.jdbc:ojdbc11' // 드라이버
+    implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16' //log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    // thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
+
+    // spring security
+    // 1. 스프링 시큐리티 사용하기 위한 스타터 추가
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // 2. 타임리프에서 스프링 시큐리티를 사용하기 위한 의존성 추가
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+    // 3. 스프링 시큐리티를 테스트하기 위한 의존성 추가
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // jwt
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.projectlombok:lombok'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1' // 자바 JWT 라이브러리 : JSON 웹 토큰(JSON Web Token, JWT)을 쉽게 생성하고 검증할 수 있는 라이브러리
+    implementation 'javax.xml.bind:jaxb-api:2.3.1' // JAXB API 의존성 추가
+
+    // OAuth2
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
+}
+
+test {
+    useJUnitPlatform()
+}

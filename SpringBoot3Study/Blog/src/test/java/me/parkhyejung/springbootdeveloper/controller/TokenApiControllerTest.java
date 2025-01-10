@@ -1,7 +1,6 @@
 package me.parkhyejung.springbootdeveloper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import me.parkhyejung.springbootdeveloper.config.jwt.JwtFactory;
 import me.parkhyejung.springbootdeveloper.config.jwt.JwtProperties;
 import me.parkhyejung.springbootdeveloper.domain.RefreshToken;
@@ -29,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TokenApiController {
+public class TokenApiControllerTest {
 
     @Autowired
     protected MockMvc mockMvc;
@@ -52,7 +51,7 @@ public class TokenApiController {
     @BeforeEach
     public void mockMvcSetup(){
         this.mockMvc= MockMvcBuilders.webAppContextSetup(context).build();
-//        userRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @DisplayName("createNewAccessToken : 새로운 액세스 토큰을 발급한다.")
@@ -63,7 +62,7 @@ public class TokenApiController {
 
         User testUser = userRepository.save(User.builder()
                 .email("user3@gmail.com")
-                .password("test")
+                .password("{noop}test") // Spring Security의 NoOpPasswordEncoder를 사용
                 .build());
 
         String refreshToken = JwtFactory.builder()
@@ -76,6 +75,7 @@ public class TokenApiController {
         CreateAccessTokenRequest request = new CreateAccessTokenRequest();
         request.setRefreshToken(refreshToken);
         final String requestBody =objectMapper.writeValueAsString(request);
+
         // when : 토큰 추가 API에 요청을 보냅니다. 이때 요청 타입은 JSON이며, given 절에서 미리 만들어둔 객체를 요청 본문으로 함께 보냅니다.
         ResultActions resultActions = mockMvc.perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

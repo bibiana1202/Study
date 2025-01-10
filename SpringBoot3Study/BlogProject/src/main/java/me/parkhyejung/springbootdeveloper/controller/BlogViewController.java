@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,7 +22,17 @@ public class BlogViewController {
     private final BlogService blogService;
 
     @GetMapping("/articles")
-    public String getArticles(Model model) {
+    public String getArticles(Model model, Principal principal) {
+        String username = ""; // 기본값 설정
+        // 현재 로그인한 사용자의 이름 또는 이메일 가져오기
+        if (principal != null) {
+            username = principal.getName(); // 일반적으로 사용자의 이름 또는 이메일
+            System.out.println("Logged in user: " + username);
+        } else {
+            System.out.println("No user is logged in.");
+        }
+        model.addAttribute("username",username);
+
         List<ArticleListViewResponse> articles = blogService.findAll()
                                                             .stream()
                                                             .map(ArticleListViewResponse::new)
@@ -34,7 +45,7 @@ public class BlogViewController {
     @GetMapping("/articles/{id}")
     // URL 경로에서 값 추출
     // @PathVariable : URL 에서 값을 가져오는 애너테이션
-    public String getArticle(@PathVariable Long id, Model model) {
+    public String getArticle(@PathVariable("id") Long id, Model model) {
         // 인자 id 에 url 로 넘어온 값을 받아 findById 메서드로 넘겨 글을 조회하고, 화면에서 사용할 모델에 저장한다음, 보여줄 화면의 템플릿 이름을 반환
         Article article = blogService.findById(id);
         model.addAttribute("article", new ArticleViewResponse(article));
@@ -44,7 +55,7 @@ public class BlogViewController {
 
     @GetMapping("/new-article")
     // 1) id 키를 가진 쿼리 파라미터의 값을 id 변수에 매핑(id 는 없을 수도 있음)
-    public String newArticle(@RequestParam(required=false) Long id , Model model){
+    public String newArticle(@RequestParam(value = "id",required=false) Long id , Model model){
         if(id == null){ // 2) id가 없으면 생성
             model.addAttribute("article",new ArticleViewResponse()); // id가 없으면 기본 생성자를 이용해 빈 ArticleViewResponse 객체를 만든다.
         }

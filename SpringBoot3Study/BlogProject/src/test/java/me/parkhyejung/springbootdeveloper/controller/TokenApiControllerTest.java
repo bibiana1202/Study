@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.parkhyejung.springbootdeveloper.config.jwt.JwtFactory;
 import me.parkhyejung.springbootdeveloper.config.jwt.JwtProperties;
 import me.parkhyejung.springbootdeveloper.domain.RefreshToken;
-import me.parkhyejung.springbootdeveloper.domain.User;
+import me.parkhyejung.springbootdeveloper.domain.SiteUser;
 import me.parkhyejung.springbootdeveloper.dto.CreateAccessTokenRequest;
 import me.parkhyejung.springbootdeveloper.repository.RefreshTokenRepository;
 import me.parkhyejung.springbootdeveloper.repository.UserRepository;
@@ -60,7 +60,7 @@ public class TokenApiControllerTest {
         // given : 테스트 유저를 생성하고,jjwt라이브러리를 이용해 리프레시 토큰을 만들어 데이터베이스에 저장합니다. 토큰 생성 API 의 요청 본문에 리프레시 토큰을 포함하여 요청 객체를 생성합니다.
         final String url = "/api/token";
 
-        User testUser = userRepository.save(User.builder()
+        SiteUser testUser = userRepository.save(SiteUser.builder()
                 .email("user3@gmail.com")
                 .password("{noop}test") // Spring Security의 NoOpPasswordEncoder를 사용
                 .build());

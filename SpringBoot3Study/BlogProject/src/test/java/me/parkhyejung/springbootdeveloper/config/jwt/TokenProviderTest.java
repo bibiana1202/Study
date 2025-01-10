@@ -1,7 +1,7 @@
 package me.parkhyejung.springbootdeveloper.config.jwt;
 
 import io.jsonwebtoken.Jwts;
-import me.parkhyejung.springbootdeveloper.domain.User;
+import me.parkhyejung.springbootdeveloper.domain.SiteUser;
 import me.parkhyejung.springbootdeveloper.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +31,7 @@ public class TokenProviderTest {
     @Test
     void generateToken() {
         // given : 토큰에 유저 정보를 추가하기 위한 테스트 유저를 만듭니다.
-        User testUser = userRepository.save(User.builder()
+        SiteUser testUser = userRepository.save(SiteUser.builder()
                 .email("user4@gmail.com")
                 .password("test")
                 .build());

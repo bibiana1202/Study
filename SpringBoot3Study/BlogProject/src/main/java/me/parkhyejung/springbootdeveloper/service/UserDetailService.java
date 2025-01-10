@@ -1,7 +1,7 @@
 package me.parkhyejung.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
-import me.parkhyejung.springbootdeveloper.domain.User;
+import me.parkhyejung.springbootdeveloper.domain.SiteUser;
 import me.parkhyejung.springbootdeveloper.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,8 @@ public class UserDetailService implements UserDetailsService {
 
     //사용자 이름(email)으로 사용자의 정보를 가져오는 메서드
     @Override
-    public User loadUserByUsername(String email){
+    public SiteUser loadUserByUsername(String email){
+        System.out.println("Authenticating user: " + email); // 디버깅 로그
         return userRepository.findByEmail(email)
                 .orElseThrow(()->new IllegalArgumentException((email)));
     }

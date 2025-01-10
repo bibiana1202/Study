@@ -9,6 +9,7 @@
 <div class ="p-5 mb-5 text-center</> bg-light">
     <h1 class="mb-3">My Blog</h1>
     <h4 class="mb-3">블로그에 오신 것을 환영합니다.</h4>
+    <h1>Welcome, <span th:text="${username}">User</span>!</h1>
 </div>
 
 <div class="container">
@@ -27,7 +28,8 @@
         </div>
         <br>
     </div>
-    <button type="button" class="btn btn-secondary" onclick="location.href='/logput'">로그아웃</button>
+    <button type="button" class="btn btn-secondary" id="logout-btn">로그아웃</button>
 </div>
+<script src="/js/token.js"></script>
 <script src="/js/article.js"></script>
 </body>
